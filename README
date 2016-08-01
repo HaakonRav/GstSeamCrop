@@ -4,11 +4,8 @@ GstSeamCrop - A GPU accelerated video retargeting plugin for GStreamer.
 
 The 'seamcrop' folder consists of all necessary files to compile, deploy and utilize the plugin.
 
-The 'evaluation' folder consists of the measurement files used perform experiments, scripts to parse the data,
-the actual raw/parsed data and a python script used to generate graphs.
+The 'evaluation' folder consists of the measurement files used perform experiments, scripts to parse the data, the actual raw/parsed data and a python script used to generate graphs.
 
-The 'moca.zip' contains the original source code for the Parallelized SeamCrop algorithm as well as
-the moca library that supports it. The code can for the algorithm can be found in 'examples/seamcarving'.
+The 'moca.zip' contains the original source code for the Parallelized SeamCrop algorithm as well as the moca library that supports it. The code can for the algorithm can be found in 'examples/seamcarving'.
 
-- Note: Parts of the moca library in the original source code are deprecated and does not compile without
-modification to multiple files.
+- Note: Parts of the moca library in the original source code are deprecated and does not compile without modification to multiple files.
