@@ -1,0 +1,74 @@
+
+From moca library readme:
+--------------------------------------------------------------------------
+To enable the CUDA code included in moca you have to do the following:
+(Note: the following text assumes you're using Fedora 17+, GCC 4.7 and
+CUDA 5.0 with a modified compiler check)
+
+Execute the following two lines in a console to add CUDA 5.0 to the search
+paths:
+
+  export PATH=$PATH:/usr/local/cuda/bin
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/local/cuda/lib:/usr/local/cuda/lib64
+
+To automatically modify the search paths every time you use your system
+add the above two lines to the file '~/.bashrc'.
+
+Your environment is now set up properly to use CUDA.
+--------------------------------------------------------------------------
+
+###############
+# Compilation #
+###############
+
+To compile the plugin:
+Run ./autogen.sh in this directory with the compute capability of the GPU: ./autogen.sh <arch>
+
+<arch> must be set to the compute capability of your GPU, and must be higher than sm_20 (2.0).
+For example, use this for a Geforce GTX 750 Ti which has compute capability 5.0: ./autogen.sh sm_50
+
+- If the 'no NVCC compiler found' error occurs, but it should be present, try running autogen.sh again with root privileges.
+
+The plugin should compile unless dependencies are missing.
+
+##############
+# Deployment #
+##############
+
+Before the plugin can be used by GStreamer, './src/.libs' and './moca/.libs' need to be added to ld's search paths.
+This can be done from the current directory with:
+
+  export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:"$PWD"/src/.libs:"$PWD"/moca/.libs
+
+To update the library search paths, run: 'sudo ldconfig'.
+
+Additionally, GStreamer needs to know where to find the plugin, which can be done by either:
+  - Setting the environment variable GST_PLUGIN_PATH and GST_PLUGIN_PATH_1_0 to '"$PWD"/src/.libs' in this directory with:
+  
+  export GST_PLUGIN_PATH=$GST_PLUGIN_PATH:"$PWD"/src/.libs
+  export GST_PLUGIN_PATH_1_0=$GST_PLUGIN_PATH_1_0:"$PWD"/src/.libs
+
+  or,
+
+  - run gstreamer with the command line option '--gst-plugin-path', such as: 
+    
+  gst-launch-1.0 --gst-plugin-path="$PWD"/src/.libs <Pipeline to run>
+
+To automatically add the search paths every time you use your system,
+add the lines export lines above to the file '~/.bashrc', substituting "$PWD" for the path to this directory.
+
+##########
+# Usage  #
+##########
+
+The plugin is now usable by the GStreamer framework.
+
+Example test pipeline:
+  
+  gst-launch-1.0 videotestsrc ! seamcrop ! xvimagesink
+
+The plugin supports 3 different properties: retargeting-factor, frame-window-size and extend-window-factor.
+For more information about the use of these properties, type 'gst-inspect-1.0 seamcrop' in the console.
+
+Contact: Haakon Wilhelm Ravik <haakonwr@student.matnat.uio.no>
+

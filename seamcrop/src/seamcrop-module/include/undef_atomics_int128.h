@@ -1,0 +1,6 @@
+#undef _GLIBCXX_ATOMIC_BUILTINS
+#undef _GLIBCXX_USE_INT128 
+#define _GLIBCXX_GTHREAD_USE_WEAK 0
+#undef __SSE2__
+#undef  __SIZEOF_INT128__
+
